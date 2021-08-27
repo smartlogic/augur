@@ -13,10 +13,16 @@ defmodule Augur.Cache do
 
   alias Augur.Thread
 
+  @doc """
+  Cache a text message
+  """
   def cache(config, text_message) do
     GenServer.call(config.name, {:cache, text_message})
   end
 
+  @doc """
+  Fetch all text messages in the cache
+  """
   def text_messages(config) do
     config.message_ets_key
     |> keys()
@@ -28,6 +34,9 @@ defmodule Augur.Cache do
     |> Enum.reverse()
   end
 
+  @doc """
+  Fetch all threads in the cache
+  """
   def threads(config) do
     config.thread_ets_key
     |> keys()
@@ -37,6 +46,9 @@ defmodule Augur.Cache do
     end)
   end
 
+  @doc """
+  Fetch a thread in the cache
+  """
   def thread(config, thread_id) do
     messages =
       Enum.filter(text_messages(config), fn text_message ->
@@ -63,6 +75,7 @@ defmodule Augur.Cache do
     keys(key, [], ets_key)
   end
 
+  @doc false
   def keys(:"$end_of_table", accumulator, _ets_key), do: accumulator
 
   def keys(current_key, accumulator, ets_key) do
@@ -70,6 +83,7 @@ defmodule Augur.Cache do
     keys(next_key, [current_key | accumulator], ets_key)
   end
 
+  @doc false
   def start_link(config) do
     GenServer.start_link(__MODULE__, config, name: config.name)
   end

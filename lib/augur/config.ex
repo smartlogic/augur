@@ -8,10 +8,14 @@ defmodule Augur.Config do
 
   use GenServer
 
+  @doc """
+  Get the current config stored in `:persistent_term`
+  """
   def get() do
     :persistent_term.get(__MODULE__)
   end
 
+  @doc false
   def start_link(config) do
     GenServer.start_link(__MODULE__, config)
   end

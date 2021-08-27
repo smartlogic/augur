@@ -60,6 +60,7 @@ defmodule Augur.ViewerPlug do
     "/" <> Enum.join(script_name, "/")
   end
 
+  @doc false
   def format_phone_number(phone_number) do
     regex = ~r/^(\+1)?(?<area_code>\d{3})(?<exchange_code>\d{3})(?<line_number>\d{4})/
     captures = Regex.named_captures(regex, phone_number)

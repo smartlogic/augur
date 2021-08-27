@@ -3,6 +3,11 @@ defmodule Augur.Development do
   Development service for Augur
 
   Caches all texts being sent from your application in `Augur.Cache`
+
+  ```
+  config = %Augur.Development{}
+  Augur.Service.send_text(config, "from", "to", "Hello!")
+  ```
   """
 
   alias Augur.Cache

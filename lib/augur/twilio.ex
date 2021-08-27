@@ -7,14 +7,31 @@ defmodule Augur.Twilio do
   Configuration required:
   - `account_sid`: Find this on the Twilio Dashboard
   - `auth_token`: Find this on the Twilio Dashboard
+
+  ```
+  config = %Augur.Twilio{account_sid: "account_sid", auth_token: "auth_token"}
+  Augur.Service.send_text(config, "from", "to", "Hello!")
+  ```
   """
 
   @enforce_keys [:account_sid, :auth_token]
   defstruct [:account_sid, :auth_token, cache: %Augur.Cache{}, finch_name: Augur.Twilio]
 
   defmodule Exception do
+    @moduledoc """
+    Exception for Twilio
+
+    If Twilio returns something not 2XX, this exception is generated
+
+    `body` and `status` are copied directly from the response from Twilio.
+
+    `code` and `reason` are from Twilio if provided, Twilio has it's own internal
+    error codes that help debug the problem that was encountered.
+    """
+
     defexception [:body, :code, :reason, :status]
 
+    @impl true
     def message(struct) do
       """
       Twilio failed an API request

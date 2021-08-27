@@ -7,5 +7,8 @@ defprotocol Augur.Service do
   - `Augur.Development`: send texts in a development mode, caching texts
   """
 
-  def send_text(_config, from, to, message)
+  @doc """
+  Send a text message
+  """
+  def send_text(config, from, to, message)
 end
