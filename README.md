@@ -2,7 +2,7 @@
 
 <!-- MDOC !-->
 
-Augur help with sending SMS
+Augur deals with sending SMS.
 
 ## Installation
 
