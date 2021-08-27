@@ -1,6 +1,6 @@
-defmodule Stein.SMS.Twilio do
+defmodule Augur.Twilio do
   @moduledoc """
-  Twilio service for Stein.SMS
+  Twilio service for Augur
 
   Sends texts via Twilio messaging API
 
@@ -10,7 +10,7 @@ defmodule Stein.SMS.Twilio do
   """
 
   @enforce_keys [:account_sid, :auth_token]
-  defstruct [:account_sid, :auth_token, cache: %Stein.SMS.Cache{}, finch_name: Stein.SMS.Twilio]
+  defstruct [:account_sid, :auth_token, cache: %Augur.Cache{}, finch_name: Augur.Twilio]
 
   defmodule Exception do
     defexception [:body, :code, :reason, :status]
@@ -28,8 +28,8 @@ defmodule Stein.SMS.Twilio do
     end
   end
 
-  defimpl Stein.SMS.Service do
-    alias Stein.SMS.Twilio
+  defimpl Augur.Service do
+    alias Augur.Twilio
 
     @twilio_base_url "https://api.twilio.com/2010-04-01/Accounts/"
 

@@ -1,6 +1,6 @@
-defmodule Stein.SMS.Config do
+defmodule Augur.Config do
   @moduledoc """
-  Configuration cache for Stein.SMS
+  Configuration cache for Augur
 
   Start with the configuration that should be generally used in your
   application. It will be stored in `:persistent_term` for quick access.

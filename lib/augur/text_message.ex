@@ -1,4 +1,4 @@
-defmodule Stein.SMS.TextMessage do
+defmodule Augur.TextMessage do
   @moduledoc """
   Development struct for containing information about a sent text
   """

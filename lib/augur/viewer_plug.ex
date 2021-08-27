@@ -1,4 +1,4 @@
-defmodule Stein.SMS.ViewerPlug do
+defmodule Augur.ViewerPlug do
   @moduledoc """
   View cached messages in a familiar interface
 
@@ -6,7 +6,7 @@ defmodule Stein.SMS.ViewerPlug do
 
   ```
   if Mix.env() == :dev do
-    forward("/sms/sent", Stein.SMS.ViewerPlug)
+    forward("/sms/sent", Augur.ViewerPlug)
   end
   ```
   """
@@ -14,8 +14,8 @@ defmodule Stein.SMS.ViewerPlug do
   use Plug.Router
   require EEx
 
-  alias Stein.SMS.Config
-  alias Stein.SMS.Cache
+  alias Augur.Config
+  alias Augur.Cache
 
   index_template = Path.join(__DIR__, "templates/index.html.eex")
   EEx.function_from_file(:defp, :index, index_template, [:assigns])

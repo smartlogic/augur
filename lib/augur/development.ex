@@ -1,14 +1,14 @@
-defmodule Stein.SMS.Development do
+defmodule Augur.Development do
   @moduledoc """
-  Development service for Stein.SMS
+  Development service for Augur
 
-  Caches all texts being sent from your application in `Stein.SMS.Cache`
+  Caches all texts being sent from your application in `Augur.Cache`
   """
 
-  alias Stein.SMS.Cache
-  alias Stein.SMS.TextMessage
+  alias Augur.Cache
+  alias Augur.TextMessage
 
-  defstruct cache: %Stein.SMS.Cache{}
+  defstruct cache: %Augur.Cache{}
 
   @doc false
   def generate_id() do
@@ -20,8 +20,8 @@ defmodule Stein.SMS.Development do
     Base.encode16(bytes, case: :lower)
   end
 
-  defimpl Stein.SMS.Service do
-    alias Stein.SMS.Development
+  defimpl Augur.Service do
+    alias Augur.Development
 
     def send_text(config, from, to, message) do
       text_message = %TextMessage{

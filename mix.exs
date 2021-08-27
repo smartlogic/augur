@@ -1,9 +1,9 @@
-defmodule SteinSms.MixProject do
+defmodule Augur.MixProject do
   use Mix.Project
 
   def project do
     [
-      app: :stein_sms,
+      app: :augur,
       version: "0.1.0",
       elixir: "~> 1.10",
       start_permanent: Mix.env() == :prod,

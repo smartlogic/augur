@@ -1,4 +1,4 @@
-defmodule Stein.SMS.Cache do
+defmodule Augur.Cache do
   @moduledoc """
   A development cache for text messages that were sent
   """
@@ -7,11 +7,11 @@ defmodule Stein.SMS.Cache do
 
   require Logger
 
-  defstruct message_ets_key: :stein_sms_message_cache,
+  defstruct message_ets_key: :augur_message_cache,
             name: __MODULE__,
-            thread_ets_key: :stein_sms_threads_cache
+            thread_ets_key: :augur_threads_cache
 
-  alias Stein.SMS.Thread
+  alias Augur.Thread
 
   def cache(config, text_message) do
     GenServer.call(config.name, {:cache, text_message})

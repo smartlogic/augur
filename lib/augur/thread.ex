@@ -1,6 +1,6 @@
-defmodule Stein.SMS.Thread do
+defmodule Augur.Thread do
   @moduledoc """
-  Combine multiple `Stein.SMS.TextMessage`s into threads
+  Combine multiple `Augur.TextMessage`s into threads
 
   Threads contain:
   - A generated ID

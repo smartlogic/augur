@@ -5,17 +5,17 @@
 ## Installation
 
 If [available in Hex](https://hex.pm/docs/publish), the package can be installed
-by adding `stein_sms` to your list of dependencies in `mix.exs`:
+by adding `augur` to your list of dependencies in `mix.exs`:
 
 ```elixir
 def deps do
   [
-    {:stein_sms, "~> 0.1.0"}
+    {:augur, "~> 0.1.0"}
   ]
 end
 ```
 
 Documentation can be generated with [ExDoc](https://github.com/elixir-lang/ex_doc)
 and published on [HexDocs](https://hexdocs.pm). Once published, the docs can
-be found at [https://hexdocs.pm/stein_sms](https://hexdocs.pm/stein_sms).
+be found at [https://hexdocs.pm/augur](https://hexdocs.pm/augur).
 
