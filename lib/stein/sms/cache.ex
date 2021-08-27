@@ -5,19 +5,45 @@ defmodule Stein.SMS.Cache do
 
   use GenServer
 
-  defstruct ets_key: :stein_sms_cache, name: __MODULE__
-
   require Logger
+
+  defstruct message_ets_key: :stein_sms_message_cache,
+            name: __MODULE__,
+            thread_ets_key: :stein_sms_threads_cache
+
+  alias Stein.SMS.Thread
 
   def cache(config, text_message) do
     GenServer.call(config.name, {:cache, text_message})
   end
 
   def text_messages(config) do
-    Enum.map(keys(config.ets_key), fn key ->
-      {:ok, text_message} = get(config.ets_key, key)
+    config.message_ets_key
+    |> keys()
+    |> Enum.map(fn key ->
+      {:ok, text_message} = get(config.message_ets_key, key)
       text_message
     end)
+    |> Enum.sort_by(fn text_message -> text_message.sent_at end)
+    |> Enum.reverse()
+  end
+
+  def threads(config) do
+    config.thread_ets_key
+    |> keys()
+    |> Enum.map(fn involved ->
+      {:ok, thread_id} = get(config.thread_ets_key, involved)
+      %Thread{id: thread_id, involved: involved}
+    end)
+  end
+
+  def thread(config, thread_id) do
+    messages =
+      Enum.filter(text_messages(config), fn text_message ->
+        text_message.thread_id == thread_id
+      end)
+
+    Thread.messages_to_thread(thread_id, messages)
   end
 
   @doc false
@@ -55,17 +81,36 @@ defmodule Stein.SMS.Cache do
 
   @impl true
   def handle_continue(:start_cache, state) do
-    :ets.new(state.ets_key, [:set, :protected, :named_table])
+    :ets.new(state.thread_ets_key, [:set, :protected, :named_table])
+    :ets.new(state.message_ets_key, [:set, :protected, :named_table])
 
     {:noreply, state}
   end
 
   @impl true
   def handle_call({:cache, text_message}, _from, state) do
+    {:ok, thread_id} = cache_thread(state, text_message)
+    text_message = %{text_message | thread_id: thread_id}
+
     Logger.info("Caching sent text - #{inspect(text_message)}")
 
-    :ets.insert(state.ets_key, {text_message.id, text_message})
+    :ets.insert(state.message_ets_key, {text_message.id, text_message})
 
     {:reply, :ok, state}
+  end
+
+  defp cache_thread(state, text_message) do
+    involved = MapSet.new([text_message.from, text_message.to])
+
+    case :ets.lookup(state.thread_ets_key, involved) do
+      [{_involved, thread_id}] ->
+        {:ok, thread_id}
+
+      [] ->
+        thread_id = Thread.generate_id()
+        :ets.insert(state.thread_ets_key, {involved, thread_id})
+
+        {:ok, thread_id}
+    end
   end
 end

@@ -1,0 +1,28 @@
+<!DOCTYPE>
+<html>
+  <head>
+    <title>Stein SMS</title>
+    <link href="https://unpkg.com/tailwindcss@2.2.7/dist/tailwind.min.css" rel="stylesheet">
+  </head>
+  <body>
+    <div class="relative px-4">
+      <div class="text-lg max-w-prose mx-auto">
+        <h1 class="mt-4 text-center text-xl">Threads</h1>
+
+        <div class="mt-6 mx-auto">
+          <ul role="list" class="divide-y divide-gray-200">
+            <%= Enum.map(@threads, fn thread -> %>
+              <li class="py-4 flex">
+                <a class="block w-full cursor-hand" href="<%= @base_path %>/threads/<%= thread.id %>">
+                  <%= Enum.map(thread.involved, fn phone_number -> %>
+                    <span class="bg-gray-100 px-2 py-1 rounded-lg"><%= format_phone_number(phone_number) %></span>
+                  <% end) %>
+                </a>
+              </li>
+            <% end) %>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

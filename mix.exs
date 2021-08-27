@@ -23,7 +23,8 @@ defmodule SteinSms.MixProject do
     [
       {:credo, "~> 1.1", only: [:dev, :test]},
       {:finch, "~> 0.8"},
-      {:jason, "~> 1.0"}
+      {:jason, "~> 1.0"},
+      {:plug, "~> 1.12"}
     ]
   end
 end

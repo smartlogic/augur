@@ -3,5 +3,5 @@ defmodule Stein.SMS.TextMessage do
   Development struct for containing information about a sent text
   """
 
-  defstruct [:id, :from, :to, :message, :sent_at]
+  defstruct [:thread_id, :id, :from, :to, :message, :sent_at]
 end
